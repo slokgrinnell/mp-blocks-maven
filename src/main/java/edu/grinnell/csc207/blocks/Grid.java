@@ -62,7 +62,17 @@ public class Grid implements AsciiBlock {
    *   If the row is invalid.
    */
   public String row(int i) throws Exception {
-    throw new Exception("Not yet implemented"); // STUB
+    if ((i < 0) || (i >= height())) {
+      throw new Exception("Invalid row " + i);
+    } // if
+    // Find the corresponding row of the element (use modulus to wrap around)
+    int rowIndex = i % element.height();
+    // Build the row by repeating the element's row hreps times horizontally
+    StringBuilder rowBuilder = new StringBuilder();
+    for (int j = 0; j < hreps; j++) {
+      rowBuilder.append(element.row(rowIndex));
+    }
+    return rowBuilder.toString();
   } // row(int)
 
   /**
@@ -71,7 +81,7 @@ public class Grid implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    return 0;   // STUB
+    return element.height() * vreps;
   } // height()
 
   /**
@@ -80,7 +90,7 @@ public class Grid implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    return 0;   // STUB
+    return element.width() * hreps;
   } // width()
 
   /**

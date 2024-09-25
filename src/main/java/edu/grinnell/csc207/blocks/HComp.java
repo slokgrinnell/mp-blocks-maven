@@ -71,7 +71,19 @@ public class HComp implements AsciiBlock {
    *   if i is outside the range of valid rows.
    */
   public String row(int i) throws Exception {
-    return "";  // STUB
+    StringBuilder result = new StringBuilder();
+    for (AsciiBlock block : blocks) {
+        int alignmentOffset = calculateAlignmentOffset(block, i);
+        
+        // Ensure we don't get out-of-bounds row accesses
+        if (i - alignmentOffset >= 0 && i - alignmentOffset < block.height()) {
+            result.append(block.row(i - alignmentOffset));
+        } else {
+            // Fill with spaces if the block doesn't extend to this row
+            result.append(" ".repeat(block.width()));
+        }
+    }
+    return result.toString();
   } // row(int)
 
   /**
@@ -80,7 +92,11 @@ public class HComp implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    return 0;   // STUB
+    int maxHeight = 0;
+    for (AsciiBlock block : blocks) {
+      maxHeight = Math.max(maxHeight, block.height());
+    }
+    return maxHeight;
   } // height()
 
   /**
@@ -89,8 +105,23 @@ public class HComp implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    return 0;   // STUB
+    int totalWidth = 0;
+    for (AsciiBlock block : blocks) {
+      totalWidth += block.width();
+    }
+    return totalWidth;
   } // width()
+
+  private int calculateAlignmentOffset(AsciiBlock block, int i) {
+    // Calculate the vertical alignment offset based on the VAlignment
+    int diff = this.height() - block.height();
+    switch (align) {
+        case TOP: return 0;
+        case CENTER: return diff / 2;
+        case BOTTOM: return diff;
+        default: return 0;
+    }
+  }
 
   /**
    * Determine if another block is structurally equivalent to this block.

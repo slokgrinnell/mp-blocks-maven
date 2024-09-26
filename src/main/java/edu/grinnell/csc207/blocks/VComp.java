@@ -6,7 +6,7 @@ import java.util.Arrays;
  * The vertical composition of blocks.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Alyssa Ryan
  * @author Your Name Here
  */
 public class VComp implements AsciiBlock {
@@ -72,7 +72,24 @@ public class VComp implements AsciiBlock {
    *   if i is outside the range of valid rows.
    */
   public String row(int i) throws Exception {
-    return "";  // STUB
+    int leftDiff = blocks[0].height()-blocks[1].height();
+    int rightDiff = 0;
+    if(this.align == HAlignment.LEFT){
+      rightDiff = leftDiff;
+      leftDiff = 0;
+    } else if(this.align == HAlignment.RIGHT){
+      rightDiff = 0;
+    } else{
+      if(leftDiff%2 == 0){
+        leftDiff = leftDiff/2;
+        rightDiff = rightDiff/2;
+      } else{
+        leftDiff = leftDiff/2 + 1;
+        rightDiff = rightDiff/2;
+      } //if statement
+    }
+    String output = " ".repeat(leftDiff) + row(i) + " ".repeat(rightDiff);
+    return output;
   } // row(int)
 
   /**
@@ -81,7 +98,11 @@ public class VComp implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    return 0;   // STUB
+    int size=0;
+    for(int i=0; i<blocks.length; i++){
+      size += blocks[i].height();
+    }
+    return size;
   } // height()
 
   /**
@@ -90,7 +111,13 @@ public class VComp implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    return 0;   // STUB
+    int size=0;
+    for(int i=0; i<blocks.length; i++){
+      if(blocks[i].width()>size){
+        size = blocks[i].width();
+      }
+    }
+    return size;
   } // width()
 
   /**
@@ -102,7 +129,17 @@ public class VComp implements AsciiBlock {
    * @return true if the two blocks are structurally equivalent and
    *    false otherwise.
    */
-  public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+  public boolean eqv(AsciiBlock other){
+    try{
+      for(int i=0; i<other.height(); i++){
+        if(this.row(i)!=other.row(i)){
+          return false;
+        }
+      }
+    }
+    catch(Exception e){
+      return false;
+    }
+    return true;
   } // eqv(AsciiBlock)
 } // class VComp

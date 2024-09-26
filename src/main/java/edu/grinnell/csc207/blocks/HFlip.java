@@ -45,7 +45,19 @@ public class HFlip implements AsciiBlock {
    *   If the row is invalid.
    */
   public String row(int i) throws Exception {
-    throw new Exception("Not yet implemented"); // STUB
+    String originalRow = block.row(i);
+    int maxLength = this.width();  // Get the width to determine the number of spaces needed
+    String reversedRow = "";
+
+    // Reverse the row
+    for (int j = maxLength - 1; j >= 0; j--) {
+        if (j < originalRow.length()) {
+            reversedRow += originalRow.charAt(j);
+        } else {
+            reversedRow += " ";  // Add spaces to maintain the same length
+        }
+    }
+    return reversedRow;
   } // row(int)
 
   /**
@@ -54,7 +66,7 @@ public class HFlip implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    return 0;   // STUB
+    return block.height();
   } // height()
 
   /**
@@ -63,7 +75,7 @@ public class HFlip implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    return 0;   // STUB
+    return block.width();
   } // width()
 
   /**

@@ -6,7 +6,7 @@ import java.util.Arrays;
  * The horizontal composition of blocks.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Slok Rajbhandari
  */
 public class HComp implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -71,19 +71,54 @@ public class HComp implements AsciiBlock {
    *   if i is outside the range of valid rows.
    */
   public String row(int i) throws Exception {
-    StringBuilder result = new StringBuilder();
+    // Initialize the final row result as an empty string
+    String result = "";
+
+    // Iterate through the blocks to build the row string
     for (AsciiBlock block : blocks) {
-        int alignmentOffset = calculateAlignmentOffset(block, i);
-        
-        // Ensure we don't get out-of-bounds row accesses
-        if (i - alignmentOffset >= 0 && i - alignmentOffset < block.height()) {
-            result.append(block.row(i - alignmentOffset));
-        } else {
-            // Fill with spaces if the block doesn't extend to this row
-            result.append(" ".repeat(block.width()));
+        // Calculate the width difference between the block and the max width
+        int widthDiff = this.width() - block.width();
+        int leftPadding = 0;
+        int rightPadding = 0;
+
+        // Handle alignment: calculate how much space to pad on the left and right
+        if (align == VAlignment.TOP) {
+            // Align to the top: no padding needed for rows within block height
+            if (i < block.height()) {
+                // Fetch the row from the block
+                String blockRow = block.row(i);
+                result += blockRow;
+            } else {
+                // If row exceeds block height, add spaces
+                result += " ".repeat(block.width());
+            }
+        } else if (align == VAlignment.BOTTOM) {
+            // Align to the bottom: adjust for extra space at the top
+            if (i >= this.height() - block.height()) {
+                // Fetch the block's row, adjusted for bottom alignment
+                String blockRow = block.row(i - (this.height() - block.height()));
+                result += blockRow;
+            } else {
+                // If row is above the block's start, add spaces
+                result += " ".repeat(block.width());
+            }
+        } else if (align == VAlignment.CENTER) {
+            // Align to the center: distribute space evenly at the top and bottom
+            int extraRows = this.height() - block.height();
+            int paddingRows = extraRows / 2;
+            if (i >= paddingRows && i < paddingRows + block.height()) {
+                // Fetch the row from the block, adjusted for center alignment
+                String blockRow = block.row(i - paddingRows);
+                result += blockRow;
+            } else {
+                // If row is outside the block's centered range, add spaces
+                result += " ".repeat(block.width());
+            }
         }
     }
-    return result.toString();
+
+    // Return the composed row after iterating through all blocks
+    return result;
   } // row(int)
 
   /**

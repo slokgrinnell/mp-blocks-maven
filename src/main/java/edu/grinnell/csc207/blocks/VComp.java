@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  * @author Samuel A. Rebelsky
  * @author Alyssa Ryan
- * @author Your Name Here
+ * @author Slok Rajbhandari
  */
 public class VComp implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -72,24 +72,36 @@ public class VComp implements AsciiBlock {
    *   if i is outside the range of valid rows.
    */
   public String row(int i) throws Exception {
-    int leftDiff = blocks[0].height()-blocks[1].height();
-    int rightDiff = 0;
-    if(this.align == HAlignment.LEFT){
-      rightDiff = leftDiff;
-      leftDiff = 0;
-    } else if(this.align == HAlignment.RIGHT){
-      rightDiff = 0;
-    } else{
-      if(leftDiff%2 == 0){
-        leftDiff = leftDiff/2;
-        rightDiff = rightDiff/2;
-      } else{
-        leftDiff = leftDiff/2 + 1;
-        rightDiff = rightDiff/2;
-      } //if statement
+    int currentRow = 0;
+    for (AsciiBlock block : blocks) {
+        if (i < currentRow + block.height()) {
+            // We are in the right block, so get the row from this block
+            String blockRow = block.row(i - currentRow);
+
+            // Handle alignment
+            int widthDiff = this.width() - block.width();
+            int leftPadding = 0;
+            int rightPadding = 0;
+
+            if (align == HAlignment.LEFT) {
+                rightPadding = widthDiff; // Pad the right side
+            } else if (align == HAlignment.RIGHT) {
+                leftPadding = widthDiff; // Pad the left side
+            } else if (align == HAlignment.CENTER) {
+                leftPadding = widthDiff / 2;
+                rightPadding = widthDiff - leftPadding;
+            }
+
+            // Return the row with the appropriate padding
+            return " ".repeat(leftPadding) + blockRow + " ".repeat(rightPadding);
+        } else {
+            // Move to the next block's rows
+            currentRow += block.height();
+        }
     }
-    String output = " ".repeat(leftDiff) + row(i) + " ".repeat(rightDiff);
-    return output;
+    
+    // If the row is out of bounds
+    throw new Exception("Row out of bounds");
   } // row(int)
 
   /**

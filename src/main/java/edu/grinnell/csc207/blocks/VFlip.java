@@ -45,7 +45,12 @@ public class VFlip implements AsciiBlock {
    *   If the row is invalid.
    */
   public String row(int i) throws Exception {
-    throw new Exception("Not yet implemented"); // STUB
+    // Ensure the row number is valid
+    if (i < 0 || i >= height()) {
+      throw new Exception("Invalid row " + i);
+    }
+    // Return the row from the flipped block, which is (height - 1 - i)
+    return block.row(height() - 1 - i);
   } // row(int)
 
   /**
@@ -54,7 +59,7 @@ public class VFlip implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    return 0;   // STUB
+    return block.height();   // The height is the same as the original block
   } // height()
 
   /**
@@ -63,7 +68,7 @@ public class VFlip implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    return 0;   // STUB
+    return block.width();   // The width is the same as the original block
   } // width()
 
   /**
@@ -76,6 +81,11 @@ public class VFlip implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+  // Check if the other block is also a VFlip block and compare the underlying blocks
+    if (other instanceof VFlip) {
+      VFlip otherFlip = (VFlip) other;
+      return this.block.eqv(otherFlip.block);
+    }
+    return false;
   } // eqv(AsciiBlock)
 } // class VFlip

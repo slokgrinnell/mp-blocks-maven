@@ -77,12 +77,10 @@ public class VComp implements AsciiBlock {
         if (i < currentRow + block.height()) {
             // We are in the right block, so get the row from this block
             String blockRow = block.row(i - currentRow);
-
             // Handle alignment
             int widthDiff = this.width() - block.width();
             int leftPadding = 0;
             int rightPadding = 0;
-
             if (align == HAlignment.LEFT) {
                 rightPadding = widthDiff; // Pad the right side
             } else if (align == HAlignment.RIGHT) {
@@ -91,7 +89,6 @@ public class VComp implements AsciiBlock {
                 leftPadding = widthDiff / 2;
                 rightPadding = widthDiff - leftPadding;
             }
-
             // Return the row with the appropriate padding
             return " ".repeat(leftPadding) + blockRow + " ".repeat(rightPadding);
         } else {
@@ -99,7 +96,6 @@ public class VComp implements AsciiBlock {
             currentRow += block.height();
         }
     }
-    
     // If the row is out of bounds
     throw new Exception("Row out of bounds");
   } // row(int)

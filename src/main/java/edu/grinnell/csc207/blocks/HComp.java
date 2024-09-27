@@ -73,14 +73,12 @@ public class HComp implements AsciiBlock {
   public String row(int i) throws Exception {
     // Initialize the final row result as an empty string
     String result = "";
-
     // Iterate through the blocks to build the row string
     for (AsciiBlock block : blocks) {
         // Calculate the width difference between the block and the max width
         int widthDiff = this.width() - block.width();
         int leftPadding = 0;
         int rightPadding = 0;
-
         // Handle alignment: calculate how much space to pad on the left and right
         if (align == VAlignment.TOP) {
             // Align to the top: no padding needed for rows within block height
@@ -91,7 +89,7 @@ public class HComp implements AsciiBlock {
             } else {
                 // If row exceeds block height, add spaces
                 result += " ".repeat(block.width());
-            }
+            } // end if-else (top alignment check)
         } else if (align == VAlignment.BOTTOM) {
             // Align to the bottom: adjust for extra space at the top
             if (i >= this.height() - block.height()) {
@@ -101,7 +99,7 @@ public class HComp implements AsciiBlock {
             } else {
                 // If row is above the block's start, add spaces
                 result += " ".repeat(block.width());
-            }
+            } // end if-else (bottom alignment check)
         } else if (align == VAlignment.CENTER) {
             // Align to the center: distribute space evenly at the top and bottom
             int extraRows = this.height() - block.height();
@@ -113,13 +111,11 @@ public class HComp implements AsciiBlock {
             } else {
                 // If row is outside the block's centered range, add spaces
                 result += " ".repeat(block.width());
-            }
-        }
-    }
-
-    // Return the composed row after iterating through all blocks
+            } // end if-else (center alignment check)
+        } // end if-else (alignment type check)
+    } // end for (iterate over blocks)
     return result;
-  } // row(int)
+} // row(int)
 
   /**
    * Determine how many rows are in the block.
@@ -151,10 +147,10 @@ public class HComp implements AsciiBlock {
     // Calculate the vertical alignment offset based on the VAlignment
     int diff = this.height() - block.height();
     switch (align) {
-        case TOP: return 0;
-        case CENTER: return diff / 2;
-        case BOTTOM: return diff;
-        default: return 0;
+      case TOP: return 0;
+      case CENTER: return diff / 2;
+      case BOTTOM: return diff;
+      default: return 0;
     }
   }
 

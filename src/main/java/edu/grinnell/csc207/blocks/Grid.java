@@ -62,17 +62,19 @@ public class Grid implements AsciiBlock {
    *   If the row is invalid.
    */
   public String row(int i) throws Exception {
-    if ((i < 0) || (i >= height())) {
+     // Validate the row number
+     if (i < 0 || i >= height()) {
       throw new Exception("Invalid row " + i);
-    } // if
-    // Find the corresponding row of the element (use modulus to wrap around)
-    int rowIndex = i % element.height();
-    // Build the row by repeating the element's row hreps times horizontally
-    StringBuilder rowBuilder = new StringBuilder();
-    for (int j = 0; j < hreps; j++) {
-      rowBuilder.append(element.row(rowIndex));
     }
-    return rowBuilder.toString();
+    // Calculate the corresponding row of the element using modulus for vertical repetition
+    int rowIndex = i % element.height();
+    // Start with an empty result
+    String result = "";
+    // Repeat the row from the element hreps times horizontally
+    for (int j = 0; j < hreps; j++) {
+      result += element.row(rowIndex);
+    }
+    return result;
   } // row(int)
 
   /**
@@ -116,7 +118,12 @@ public class Grid implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(Grid other) {
-    return (this.hreps == other.hreps) && (this.vreps == other.hreps)
-        && (this.element.eqv(other.element));
+    if (!(other instanceof Grid)) {
+      return false;
+    }
+    Grid otherGrid = (Grid) other;
+    return this.hreps == otherGrid.hreps &&
+           this.vreps == otherGrid.vreps &&
+           this.element.eqv(otherGrid.element);
   } // eqv(Grid)
 } // class Grid

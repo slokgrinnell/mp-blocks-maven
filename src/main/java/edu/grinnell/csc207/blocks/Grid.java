@@ -116,7 +116,7 @@ public class Grid implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(Grid other) {
-    return (this.hreps == other.hreps) && (this.vreps == other.hreps)
-        && (this.element.eqv(other.element));
+    return (this.hreps == other.hreps) && (this.vreps == other.vreps)
+        && (AsciiBlock.eqv(this.element, other.element));
   } // eqv(Grid)
 } // class Grid

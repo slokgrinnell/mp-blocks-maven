@@ -59,7 +59,7 @@ public class VFlip implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    return block.height();   // The height is the same as the original block
+    return this.block.height();   // The height is the same as the original block
   } // height()
 
   /**
@@ -68,7 +68,7 @@ public class VFlip implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    return block.width();   // The width is the same as the original block
+    return this.block.width();   // The width is the same as the original block
   } // width()
 
   /**

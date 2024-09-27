@@ -77,9 +77,21 @@ public class Line implements AsciiBlock {
    * @return true if the two blocks are structurally equivalent and
    *    false otherwise.
    */
-  public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+  public boolean eqv(AsciiBlock other){
+    return ((other instanceof Line) && (this.eqv((Line)other)));
   } // eqv(AsciiBlock)
+
+  public boolean eqv(Line other){
+    try {
+      boolean same = false;
+      if((this.height() == other.height()) && (this.height() == 1) && (this.width() == other.width())){
+        same = (this.row(0).equals(other.row(0)));
+      }
+      return same;
+    } catch (Exception e) {
+      return false;
+    } 
+  }
 
   // +---------------+-----------------------------------------------
   // | Other methods |

@@ -98,8 +98,25 @@ public class Rect implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+    return ((other instanceof Rect) && (this.eqv((Rect) other)));
   } // eqv(AsciiBlock)
+
+  public boolean eqv(Rect other){
+    try {
+      boolean same = (this.height() == other.height()) && (this.width() == other.width());
+      if(same){
+        for (int i=0; i<this.height(); i++){
+          if(!this.row(i).equals(other.row(i))){
+            same = false;
+            return same;
+          }
+        }
+      }
+      return same;
+    } catch (Exception e) {
+      return false;
+    }    
+  }
 
   // +---------------+-----------------------------------------------
   // | Other methods |

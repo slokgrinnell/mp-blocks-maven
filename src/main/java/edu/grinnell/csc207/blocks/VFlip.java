@@ -82,10 +82,21 @@ public class VFlip implements AsciiBlock {
    */
   public boolean eqv(AsciiBlock other) {
   // Check if the other block is also a VFlip block and compare the underlying blocks
-    if (other instanceof VFlip) {
-      VFlip otherFlip = (VFlip) other;
-      return this.block.eqv(otherFlip.block);
-    }
-    return false;
+    return ((other instanceof VFlip) && (this.eqv((VFlip) other)));
   } // eqv(AsciiBlock)
+
+  public boolean eqv(VFlip other){
+    try {
+      boolean same = (this.height() == other.height()) && (this.width() == other.width());
+      for(int i=0; i<this.height(); i++){
+        if((this.row(i).equals(other.row(i))) == false){
+          same = false;
+          return same;
+        }
+      }
+      return same;
+    } catch (Exception e) {
+      return false;
+    }
+  }
 } // class VFlip

@@ -93,6 +93,10 @@ public class Surrounded implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+    return ((other instanceof Surrounded) && (this.eqv((Surrounded) other)));
   } // eqv(AsciiBlock)
+
+  public boolean eqv(Surrounded other) {
+    return (this.width() == other.width()) && (this.height() == other.height()) && (this.contents.eqv(other.contents));
+  }
 } // class Surrounded

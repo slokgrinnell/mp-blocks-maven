@@ -44,6 +44,7 @@ public class VFlip implements AsciiBlock {
    * @exception Exception
    *   If the row is invalid.
    */
+  
   public String row(int i) throws Exception {
     // Ensure the row number is valid
     if (i < 0 || i >= height()) {

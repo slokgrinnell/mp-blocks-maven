@@ -1,0 +1,3 @@
+Added authors' names to all files we worked on
+Fixed checkstyle errors on basically all classes
+Fixed checkerboard methods (height, width, and row)

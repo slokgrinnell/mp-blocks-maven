@@ -4,6 +4,8 @@ package edu.grinnell.csc207.blocks;
  * A text block surrounded by a box.
  *
  * @author Samuel A. Rebelsky
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Boxed implements AsciiBlock {
   // +-----------+---------------------------------------------------
@@ -105,15 +107,25 @@ public class Boxed implements AsciiBlock {
   } // eqv(AsciiBlock)
 
   /**
-   * Determine if another Boxed is structurally equivalent to this block.
+   * Determine if two Boxed blocks have the same contents.
    *
    * @param other
    *   The block to compare to this block.
    *
-   * @return true if the two blocks are structurally equivalent and
-   *     false otherwise.
+   * @return true if the two blocks are equivalent and false otherwise.
    */
   public boolean eqv(Boxed other) {
-    return this.contents.eqv(other.contents);
-  } // eqv(Boxed)
+    try {
+      boolean same = (this.height() == other.height()) && (this.width() == other.width());
+      for (int i = 0; i < this.height(); i++) {
+        if (!(this.row(i).equals(other.row(i)))) {
+          same = false;
+          return same;
+        } //endif
+      } //for
+      return same;
+    } catch (Exception e) {
+      return false;
+    } //try/catch
+  } //eqv(Boxed)
 } // class Boxed

@@ -4,7 +4,8 @@ package edu.grinnell.csc207.blocks;
  * A grid of a single text block.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Grid implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -62,10 +63,10 @@ public class Grid implements AsciiBlock {
    *   If the row is invalid.
    */
   public String row(int i) throws Exception {
-     // Validate the row number
-     if (i < 0 || i >= height()) {
+    // Validate the row number
+    if (i < 0 || i >= height()) {
       throw new Exception("Invalid row " + i);
-    }
+    } //endif
     // Calculate the corresponding row of the element using modulus for vertical repetition
     int rowIndex = i % element.height();
     // Start with an empty result
@@ -73,7 +74,7 @@ public class Grid implements AsciiBlock {
     // Repeat the row from the element hreps times horizontally
     for (int j = 0; j < hreps; j++) {
       result += element.row(rowIndex);
-    }
+    } //for
     return result;
   } // row(int)
 
@@ -109,16 +110,16 @@ public class Grid implements AsciiBlock {
   } // eqv(AsciiBlock)
 
   /**
-   * Determine if another grid is structurally equivalent to this grid.
+   * Determine if two Grid blocks have the same contents.
    *
    * @param other
-   *   The grid to compare to this grid.
+   *   The block to compare to this block.
    *
-   * @return true if the two blocks are structurally equivalent and
-   *    false otherwise.
+   * @return true if the two blocks are equivalent and false otherwise.
    */
   public boolean eqv(Grid other) {
-    return (this.hreps == other.hreps) && (this.vreps == other.hreps)
+    return (this.hreps == other.hreps)
+        && (this.vreps == other.vreps)
         && (this.element.eqv(other.element));
-  } // eqv(Grid)
+  } //eqv(Grid)
 } // class Grid

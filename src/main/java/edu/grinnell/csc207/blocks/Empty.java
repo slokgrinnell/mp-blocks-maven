@@ -3,6 +3,8 @@ package edu.grinnell.csc207.blocks;
 /**
  * A completely empty block. Used mostly for checking strange edge cases.
  * (Or perhaps used to create such cases.)
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Empty implements AsciiBlock {
   // +--------------+------------------------------------------------------
@@ -61,6 +63,6 @@ public class Empty implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return other instanceof Empty;
+    return (other instanceof Empty);
   } // eqv(AsciiBlock)
 } // class Empty

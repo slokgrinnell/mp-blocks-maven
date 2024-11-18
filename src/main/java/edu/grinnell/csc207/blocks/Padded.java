@@ -4,7 +4,8 @@ package edu.grinnell.csc207.blocks;
  * A padded ASCII block.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Padded implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -86,7 +87,7 @@ public class Padded implements AsciiBlock {
    *   If the row is invalid.
    */
   public String row(int i) throws Exception {
-    throw new Exception("Not yet implemented"); // STUB
+    throw new Exception("Not yet implemented");
   } // row(int)
 
   /**
@@ -95,7 +96,7 @@ public class Padded implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    return 0;   // STUB
+    return this.height;
   } // height()
 
   /**
@@ -104,7 +105,7 @@ public class Padded implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    return 0;   // STUB
+    return this.width;
   } // width()
 
   /**
@@ -117,6 +118,6 @@ public class Padded implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+    return false;
   } // eqv(AsciiBlock)
 } // class Padded

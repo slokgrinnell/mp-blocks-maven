@@ -4,7 +4,8 @@ package edu.grinnell.csc207.blocks;
  * A vertically flipped ASCII block.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class VFlip implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -44,12 +45,11 @@ public class VFlip implements AsciiBlock {
    * @exception Exception
    *   If the row is invalid.
    */
-  
   public String row(int i) throws Exception {
     // Ensure the row number is valid
     if (i < 0 || i >= height()) {
       throw new Exception("Invalid row " + i);
-    }
+    } //endif
     // Return the row from the flipped block, which is (height - 1 - i)
     return block.row(height() - 1 - i);
   } // row(int)
@@ -86,18 +86,17 @@ public class VFlip implements AsciiBlock {
     return ((other instanceof VFlip) && (this.eqv((VFlip) other)));
   } // eqv(AsciiBlock)
 
-  public boolean eqv(VFlip other){
-    try {
-      boolean same = (this.height() == other.height()) && (this.width() == other.width());
-      for(int i=0; i<this.height(); i++){
-        if((this.row(i).equals(other.row(i))) == false){
-          same = false;
-          return same;
-        }
-      }
-      return same;
-    } catch (Exception e) {
-      return false;
-    }
-  }
+  /**
+   * Determine if two VFlips have the same contents.
+   *
+   * @param other
+   *   The block to compare to this block.
+   *
+   * @return true if the two blocks are equivalent and false otherwise.
+   */
+  public boolean eqv(VFlip other) {
+    return block.eqv(other.block)
+            && (this.height() == other.height())
+            && (this.width() == other.width());
+  } //eqv(VFlip)
 } // class VFlip

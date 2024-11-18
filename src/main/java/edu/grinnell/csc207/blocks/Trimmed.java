@@ -4,7 +4,8 @@ package edu.grinnell.csc207.blocks;
  * A trimmed ASCII block.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Trimmed implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -78,7 +79,7 @@ public class Trimmed implements AsciiBlock {
    *   If the row is invalid.
    */
   public String row(int i) throws Exception {
-    throw new Exception("Not yet implemented"); // STUB
+    throw new Exception("Not yet implemented");
   } // row(int)
 
   /**
@@ -87,7 +88,7 @@ public class Trimmed implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    return 0;   // STUB
+    return this.height;
   } // height()
 
   /**
@@ -96,7 +97,7 @@ public class Trimmed implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    return 0;   // STUB
+    return this.width;
   } // width()
 
   /**
@@ -109,6 +110,20 @@ public class Trimmed implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
-  } // eqv(AsciiBlock)
+    return ((other instanceof Trimmed) && (this.eqv((Trimmed) other)));
+  } //eqv(AsciiBlock)
+
+  /**
+   * Determine if two Trimmed blocks have the same contents.
+   *
+   * @param other
+   *   The block to compare to this block.
+   *
+   * @return true if the two blocks are equivalent and false otherwise.
+   */
+  public boolean eqv(Trimmed other) {
+    return this.block.eqv(other)
+            && (this.height() == other.height())
+            && (this.width() == other.width());
+  } //eqv(Trimmed)
 } // class Trimmed

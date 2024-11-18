@@ -6,6 +6,7 @@ import java.util.Arrays;
  * The horizontal composition of blocks.
  *
  * @author Samuel A. Rebelsky
+ * @author Alyssa Ryan
  * @author Slok Rajbhandari
  */
 public class HComp implements AsciiBlock {
@@ -75,47 +76,47 @@ public class HComp implements AsciiBlock {
     String result = "";
     // Iterate through the blocks to build the row string
     for (AsciiBlock block : blocks) {
-        // Calculate the width difference between the block and the max width
-        int widthDiff = this.width() - block.width();
-        int leftPadding = 0;
-        int rightPadding = 0;
-        // Handle alignment: calculate how much space to pad on the left and right
-        if (align == VAlignment.TOP) {
-            // Align to the top: no padding needed for rows within block height
-            if (i < block.height()) {
-                // Fetch the row from the block
-                String blockRow = block.row(i);
-                result += blockRow;
-            } else {
-                // If row exceeds block height, add spaces
-                result += " ".repeat(block.width());
-            } // end if-else (top alignment check)
-        } else if (align == VAlignment.BOTTOM) {
-            // Align to the bottom: adjust for extra space at the top
-            if (i >= this.height() - block.height()) {
-                // Fetch the block's row, adjusted for bottom alignment
-                String blockRow = block.row(i - (this.height() - block.height()));
-                result += blockRow;
-            } else {
-                // If row is above the block's start, add spaces
-                result += " ".repeat(block.width());
-            } // end if-else (bottom alignment check)
-        } else if (align == VAlignment.CENTER) {
-            // Align to the center: distribute space evenly at the top and bottom
-            int extraRows = this.height() - block.height();
-            int paddingRows = extraRows / 2;
-            if (i >= paddingRows && i < paddingRows + block.height()) {
-                // Fetch the row from the block, adjusted for center alignment
-                String blockRow = block.row(i - paddingRows);
-                result += blockRow;
-            } else {
-                // If row is outside the block's centered range, add spaces
-                result += " ".repeat(block.width());
-            } // end if-else (center alignment check)
-        } // end if-else (alignment type check)
+      // Calculate the width difference between the block and the max width
+      int widthDiff = this.width() - block.width();
+      int leftPadding = 0;
+      int rightPadding = 0;
+      // Handle alignment: calculate how much space to pad on the left and right
+      if (align == VAlignment.TOP) {
+        // Align to the top: no padding needed for rows within block height
+        if (i < block.height()) {
+          // Fetch the row from the block
+          String blockRow = block.row(i);
+          result += blockRow;
+        } else {
+          // If row exceeds block height, add spaces
+          result += " ".repeat(block.width());
+        } // end if-else (top alignment check)
+      } else if (align == VAlignment.BOTTOM) {
+        // Align to the bottom: adjust for extra space at the top
+        if (i >= this.height() - block.height()) {
+          // Fetch the block's row, adjusted for bottom alignment
+          String blockRow = block.row(i - (this.height() - block.height()));
+          result += blockRow;
+        } else {
+          // If row is above the block's start, add spaces
+          result += " ".repeat(block.width());
+        } // end if-else (bottom alignment check)
+      } else if (align == VAlignment.CENTER) {
+        // Align to the center: distribute space evenly at the top and bottom
+        int extraRows = this.height() - block.height();
+        int paddingRows = extraRows / 2;
+        if (i >= paddingRows && i < paddingRows + block.height()) {
+          // Fetch the row from the block, adjusted for center alignment
+          String blockRow = block.row(i - paddingRows);
+          result += blockRow;
+        } else {
+          // If row is outside the block's centered range, add spaces
+          result += " ".repeat(block.width());
+        } // end if-else (center alignment check)
+      } // end if-else (alignment type check)
     } // end for (iterate over blocks)
     return result;
-} // row(int)
+  } // row(int)
 
   /**
    * Determine how many rows are in the block.
@@ -126,7 +127,7 @@ public class HComp implements AsciiBlock {
     int maxHeight = 0;
     for (AsciiBlock block : blocks) {
       maxHeight = Math.max(maxHeight, block.height());
-    }
+    } //for
     return maxHeight;
   } // height()
 
@@ -139,7 +140,7 @@ public class HComp implements AsciiBlock {
     int totalWidth = 0;
     for (AsciiBlock block : blocks) {
       totalWidth += block.width();
-    }
+    } //for
     return totalWidth;
   } // width()
 
@@ -151,8 +152,8 @@ public class HComp implements AsciiBlock {
       case CENTER: return diff / 2;
       case BOTTOM: return diff;
       default: return 0;
-    }
-  }
+    } //switch
+  } //calculateAlignmentOffset(AsciiBlock, int)
 
   /**
    * Determine if another block is structurally equivalent to this block.
@@ -164,6 +165,29 @@ public class HComp implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+    return ((other instanceof HComp) && (this.eqv((HComp) other)));
   } // eqv(AsciiBlock)
+
+  /**
+   * Determine if two HComp blocks have the same contents.
+   *
+   * @param other
+   *   The block to compare to this block.
+   *
+   * @return true if the two blocks are equivalent and false otherwise.
+   */
+  public boolean eqv(HComp other) {
+    if ((this.height() == other.height())
+          && (this.width() == other.width())
+          && (this.align == other.align)) {
+      for (int i = 0; i < this.blocks.length; i++) {
+        if(!this.blocks[i].eqv(other.blocks[i])){
+          return false;
+        } //if
+      } //for
+      return true;
+    } else {
+      return false;
+    } //endif
+  } //eqv(HComp)
 } // class HComp

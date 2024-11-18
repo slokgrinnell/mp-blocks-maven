@@ -4,6 +4,8 @@ package edu.grinnell.csc207.blocks;
  * One line of text. The line is mutable (that is, it can be changed).
  *
  * @author Samuel A. Rebelsky
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Line implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -77,21 +79,30 @@ public class Line implements AsciiBlock {
    * @return true if the two blocks are structurally equivalent and
    *    false otherwise.
    */
-  public boolean eqv(AsciiBlock other){
-    return ((other instanceof Line) && (this.eqv((Line)other)));
+  public boolean eqv(AsciiBlock other) {
+    return ((other instanceof Line) && (this.eqv((Line) other)));
   } // eqv(AsciiBlock)
 
-  public boolean eqv(Line other){
+  /**
+   * Determine if two Trimmed blocks have the same contents.
+   *
+   * @param other
+   *   The block to compare to this block.
+   *
+   * @return true if the two blocks are equivalent and false otherwise.
+   */
+  public boolean eqv(Line other) {
     try {
-      boolean same = false;
-      if((this.height() == other.height()) && (this.height() == 1) && (this.width() == other.width())){
-        same = (this.row(0).equals(other.row(0)));
-      }
+      boolean same = (this.height() == other.height()) && (this.width() == other.width());
+        if (!(this.row(0).equals(other.row(0)))) {
+        same = false;
+        return same;
+      } //endif
       return same;
     } catch (Exception e) {
       return false;
-    } 
-  }
+    } //try/catch
+  } //eqv(Line)
 
   // +---------------+-----------------------------------------------
   // | Other methods |

@@ -6,7 +6,8 @@ import java.io.PrintWriter;
  * Blocks of ASCII text.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public interface AsciiBlock {
   // +----------------+----------------------------------------------
@@ -25,7 +26,7 @@ public interface AsciiBlock {
   public static void print(PrintWriter pen, AsciiBlock block) {
     for (int i = 0; i < block.height(); i++) {
       try {
-        pen.println(block.row(i));
+        pen.printf(block.row(i) + "\n");
       } catch (Exception e) {
         pen.printf("*** ERROR: Missing row %d ***\n", i);
       } // try/catch
@@ -60,7 +61,7 @@ public interface AsciiBlock {
    * @return true if they are structurally equivalent and false otherwise.
    */
   public static boolean eqv(AsciiBlock block1, AsciiBlock block2) {
-    return false;      // STUB
+    return block1.eqv(block2);
   } // eqv(AsciiBlock, AsciiBlock)
 
   /**

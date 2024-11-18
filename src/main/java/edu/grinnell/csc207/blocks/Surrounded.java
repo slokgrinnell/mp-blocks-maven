@@ -4,7 +4,8 @@ package edu.grinnell.csc207.blocks;
  * A text block surrounded by a single letter.
  *
  * @author Samuel A. Rebelsky
- * @author Your Name Here
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Surrounded implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -56,11 +57,11 @@ public class Surrounded implements AsciiBlock {
   public String row(int i) throws Exception {
     if (i < 0 || i >= height()) {
       throw new Exception("Row index out of bounds.");
-    }
+    } //endif
     // If it's the top or bottom row, return the surrounding line
     if (i == 0 || i == height() - 1) {
       return surroundChar.repeat(width());
-    }
+    } //endif
     // Otherwise, surround the content row with the surrounding character
     return surroundChar + contents.row(i - 1) + surroundChar;
   } // row(int)
@@ -96,7 +97,15 @@ public class Surrounded implements AsciiBlock {
     return ((other instanceof Surrounded) && (this.eqv((Surrounded) other)));
   } // eqv(AsciiBlock)
 
+  /**
+   * Determines if the contents of two Surrounded blocks are equal to each other.
+   * @param other The block to compare to this block
+   * @return true if the two blocks' contents are equal and false if not
+   */
   public boolean eqv(Surrounded other) {
-    return (this.width() == other.width()) && (this.height() == other.height()) && (this.contents.eqv(other.contents));
-  }
+    return this.contents.eqv(other.contents)
+            && (this.height() == other.height())
+            && (this.width() == other.width())
+            && this.surroundChar.equals(other.surroundChar);
+  } //eqv(Surrounded)
 } // class Surrounded

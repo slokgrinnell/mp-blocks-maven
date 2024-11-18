@@ -7,6 +7,8 @@ import java.util.Arrays;
  * testing.
  *
  * @author Samuel A. Rebelsky
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Lines implements AsciiBlock {
   // +--------+------------------------------------------------------------
@@ -111,6 +113,27 @@ public class Lines implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+    return ((other instanceof Lines) && (this.eqv((Lines) other)));
   } // eqv(AsciiBlock)
+
+  /**
+   * Determine if two Lines blocks have the same contents.
+   *
+   * @param other
+   *   The block to compare to this block.
+   *
+   * @return true if the two blocks are equivalent and false otherwise.
+   */
+  public boolean eqv(Lines other) {
+    if ((this.height() == other.height()) && (this.width() == other.width())) {
+      for (int i = 0; i < this.lines.length; i++) {
+        if(!this.lines[i].equals(other.lines[i])){
+          return false;
+        } //if
+      } //for
+      return true;
+    } else {
+      return false;
+    } //endif
+  } //eqv(Lines)
 } // class Lines

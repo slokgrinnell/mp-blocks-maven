@@ -51,12 +51,12 @@ public class HFlip implements AsciiBlock {
 
     // Reverse the row
     for (int j = maxLength - 1; j >= 0; j--) {
-        if (j < originalRow.length()) {
-            reversedRow += originalRow.charAt(j);
-        } else {
-            reversedRow += " ";  // Add spaces to maintain the same length
-        }
-    }
+      if (j < originalRow.length()) {
+        reversedRow += originalRow.charAt(j);
+      } else {
+        reversedRow += " ";  // Add spaces to maintain the same length
+      } //endif
+    } //for
     return reversedRow;
   } // row(int)
 
@@ -88,6 +88,20 @@ public class HFlip implements AsciiBlock {
    *    false otherwise.
    */
   public boolean eqv(AsciiBlock other) {
-    return false;       // STUB
+    return ((other instanceof HFlip) && (this.eqv((HFlip) other)));
   } // eqv(AsciiBlock)
+
+  /**
+   * Determine if two HFlip blocks have the same contents.
+   *
+   * @param other
+   *   The block to compare to this block.
+   *
+   * @return true if the two blocks are equivalent and false otherwise.
+   */
+  public boolean eqv(HFlip other) {
+    return block.eqv(other.block)
+            && (this.height() == other.height())
+            && (this.width() == other.width());
+  } //eqv(HFlip)
 } // class HFlip

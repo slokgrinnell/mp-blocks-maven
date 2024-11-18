@@ -74,28 +74,28 @@ public class VComp implements AsciiBlock {
   public String row(int i) throws Exception {
     int currentRow = 0;
     for (AsciiBlock block : blocks) {
-        if (i < currentRow + block.height()) {
-            // We are in the right block, so get the row from this block
-            String blockRow = block.row(i - currentRow);
-            // Handle alignment
-            int widthDiff = this.width() - block.width();
-            int leftPadding = 0;
-            int rightPadding = 0;
-            if (align == HAlignment.LEFT) {
-                rightPadding = widthDiff; // Pad the right side
-            } else if (align == HAlignment.RIGHT) {
-                leftPadding = widthDiff; // Pad the left side
-            } else if (align == HAlignment.CENTER) {
-                leftPadding = widthDiff / 2;
-                rightPadding = widthDiff - leftPadding;
-            }
-            // Return the row with the appropriate padding
-            return " ".repeat(leftPadding) + blockRow + " ".repeat(rightPadding);
-        } else {
-            // Move to the next block's rows
-            currentRow += block.height();
-        }
-    }
+      if (i < currentRow + block.height()) {
+        // We are in the right block, so get the row from this block
+        String blockRow = block.row(i - currentRow);
+        // Handle alignment
+        int widthDiff = this.width() - block.width();
+        int leftPadding = 0;
+        int rightPadding = 0;
+        if (align == HAlignment.LEFT) {
+          rightPadding = widthDiff; // Pad the right side
+        } else if (align == HAlignment.RIGHT) {
+          leftPadding = widthDiff; // Pad the left side
+        } else if (align == HAlignment.CENTER) {
+          leftPadding = widthDiff / 2;
+          rightPadding = widthDiff - leftPadding;
+        } //endif
+        // Return the row with the appropriate padding
+        return " ".repeat(leftPadding) + blockRow + " ".repeat(rightPadding);
+      } else {
+        // Move to the next block's rows
+        currentRow += block.height();
+      } //endif
+    } //for
     // If the row is out of bounds
     throw new Exception("Row out of bounds");
   } // row(int)
@@ -106,10 +106,10 @@ public class VComp implements AsciiBlock {
    * @return the number of rows
    */
   public int height() {
-    int size=0;
-    for(int i=0; i<blocks.length; i++){
+    int size = 0;
+    for (int i = 0; i < blocks.length; i++) {
       size += blocks[i].height();
-    }
+    } //for
     return size;
   } // height()
 
@@ -119,12 +119,12 @@ public class VComp implements AsciiBlock {
    * @return the number of columns
    */
   public int width() {
-    int size=0;
-    for(int i=0; i<blocks.length; i++){
-      if(blocks[i].width()>size){
+    int size = 0;
+    for (int i = 0; i < blocks.length; i++) {
+      if (blocks[i].width() > size) {
         size = blocks[i].width();
-      }
-    }
+      } //endif
+    } //for
     return size;
   } // width()
 
@@ -137,17 +137,30 @@ public class VComp implements AsciiBlock {
    * @return true if the two blocks are structurally equivalent and
    *    false otherwise.
    */
-  public boolean eqv(AsciiBlock other){
-    try{
-      for(int i=0; i<other.height(); i++){
-        if(this.row(i)!=other.row(i)){
-          return false;
-        }
-      }
-    }
-    catch(Exception e){
-      return false;
-    }
-    return true;
+  public boolean eqv(AsciiBlock other) {
+    return ((other instanceof VComp) && (this.eqv((VComp) other)));
   } // eqv(AsciiBlock)
+
+  /**
+   * Determine if two VComps have the same contents.
+   *
+   * @param other
+   *   The block to compare to this block.
+   *
+   * @return true if the two blocks are equivalent and false otherwise.
+   */
+  public boolean eqv(VComp other) {
+    if ((this.height() == other.height())
+          && (this.width() == other.width())
+          && (this.align == other.align)) {
+      for (int i = 0; i < this.blocks.length; i++) {
+        if(!this.blocks[i].eqv(other.blocks[i])){
+          return false;
+        } //if
+      } //for
+      return true;
+    } else {
+      return false;
+    } //endif
+  } //eqv(VComp)
 } // class VComp

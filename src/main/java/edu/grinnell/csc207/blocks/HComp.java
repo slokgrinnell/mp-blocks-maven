@@ -181,7 +181,7 @@ public class HComp implements AsciiBlock {
           && (this.width() == other.width())
           && (this.align == other.align)) {
       for (int i = 0; i < this.blocks.length; i++) {
-        if(!this.blocks[i].eqv(other.blocks[i])){
+        if (!this.blocks[i].eqv(other.blocks[i])) {
           return false;
         } //if
       } //for

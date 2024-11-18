@@ -94,7 +94,7 @@ public class Line implements AsciiBlock {
   public boolean eqv(Line other) {
     try {
       boolean same = (this.height() == other.height()) && (this.width() == other.width());
-        if (!(this.row(0).equals(other.row(0)))) {
+      if (!(this.row(0).equals(other.row(0)))) {
         same = false;
         return same;
       } //endif

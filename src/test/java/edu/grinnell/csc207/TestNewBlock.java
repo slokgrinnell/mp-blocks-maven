@@ -16,6 +16,8 @@ import edu.grinnell.csc207.blocks.Empty;
 
 /**
  * Tests of the new block.
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class TestNewBlock {
   // +-------+-------------------------------------------------------

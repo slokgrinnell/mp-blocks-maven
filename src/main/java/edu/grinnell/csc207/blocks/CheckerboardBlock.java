@@ -57,15 +57,15 @@ public class CheckerboardBlock implements AsciiBlock {
     String result = "";
     //This will end up 0 if the first block should be first in the row, 1 for the second
     int whichFirst = 0;
-    for (int k = 0; k < i; k+=biggerHeight()) {
+    for (int k = 0; k < i; k += biggerHeight()) {
       if (whichFirst == 0) {
         whichFirst = 1;
       } else {
         whichFirst = 0;
       } //endif
-    }//for
+    } //for
 
-    for (int j = 0; j < cols*2; j++) {
+    for (int j = 0; j < cols * 2; j++) {
       if ((whichFirst + j) % 2 == 0) {
         result += block1.row(blockRowIndex);
       } else {
@@ -77,7 +77,7 @@ public class CheckerboardBlock implements AsciiBlock {
   } // row(int)
 
   /**
-   * Determines which block has a bigger height
+   * Determines which block has a bigger height.
    * @return The height of the bigger block
    */
   public int biggerHeight() {

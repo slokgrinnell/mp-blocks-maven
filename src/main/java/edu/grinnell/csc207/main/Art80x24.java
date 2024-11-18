@@ -12,8 +12,8 @@ import java.io.PrintWriter;
 /**
  * Create and print an amazing 80x24 ASCII artwork.
  *
- * @author Your Name Here
- * @author Your Name Here
+ * @author Alyssa Ryan
+ * @author Slok Rajbhandari
  */
 public class Art80x24 {
   /**
@@ -42,12 +42,14 @@ public class Art80x24 {
     AsciiBlock leg4 = new Rect('#', 4, 3);
 
     AsciiBlock ears = new HComp(VAlignment.BOTTOM, bigEar, smallEar);
-    AsciiBlock fullHead = new VComp(HAlignment.LEFT, ears, new HComp(VAlignment.BOTTOM, head, snout));
-    AsciiBlock headAndNeck = new VComp(HAlignment.LEFT, fullHead, neck);
-    AsciiBlock[] pieces = {tail, body1,headAndNeck};
+    AsciiBlock head2 = new VComp(HAlignment.LEFT, ears, new HComp(VAlignment.BOTTOM, head, snout));
+    AsciiBlock headAndNeck = new VComp(HAlignment.LEFT, head2, neck);
+    AsciiBlock[] pieces = {tail, body1, headAndNeck};
     AsciiBlock topHalf = new HComp(VAlignment.BOTTOM, pieces);
-    AsciiBlock leftQuarter = new VComp(HAlignment.LEFT, body2, new HComp(VAlignment.TOP, leg1, leg2));
-    AsciiBlock rightQuarter = new VComp(HAlignment.RIGHT, body3, new HComp(VAlignment.TOP, leg3, leg4));
+    AsciiBlock legPair1 = new HComp(VAlignment.TOP, leg1, leg2);
+    AsciiBlock leftQuarter = new VComp(HAlignment.LEFT, body2, legPair1);
+    AsciiBlock legPair2 = new HComp(VAlignment.TOP, leg3, leg4);
+    AsciiBlock rightQuarter = new VComp(HAlignment.RIGHT, body3, legPair2);
     AsciiBlock bottomHalf = new HComp(VAlignment.TOP, leftQuarter, rightQuarter);
     AsciiBlock art = new VComp(HAlignment.LEFT, topHalf, bottomHalf);
 
